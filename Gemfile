@@ -22,3 +22,5 @@ end
 gem "actionview", "~> 4.2"
 
 gem "sinatra-flash", "~> 0.3.0"
+
+gem "faker", "~> 2.2"

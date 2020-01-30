@@ -35,6 +35,10 @@ class Click < ActiveRecord::Base
     time_ago_in_words(self.next_click_allowed)
   end
 
+  def created_at_in_words
+    time_ago_in_words(self.created_at)
+  end
+
   private
 
   def set_points

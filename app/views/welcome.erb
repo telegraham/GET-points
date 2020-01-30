@@ -16,6 +16,8 @@
       <tr>
         <th>Name</th>
         <th>Points</th>
+        <th>Last click</th>
+        <th>Clicks</th>
         <th>Can click</th>
       </tr>
     </thead>
@@ -24,6 +26,8 @@
         <tr>
           <td><%= user.name %></td>
           <td><%= user.points %></td>
+          <td><%= user.last_click_time_in_words %></td>
+          <td><%= user.clicks.length %></td>
           <td>
             <% if user.can_click? %>
               now

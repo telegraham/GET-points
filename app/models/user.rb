@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
     self.clicks.create
   end
 
+  def last_click_time_in_words
+    self.latest_click ? self.latest_click.created_at_in_words + " ago" : "never"
+  end
+
   private 
 
   def create_login_token
@@ -32,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def slugify_name
-    self.slug = self.name.downcase.gsub(/[^a-z]/, "-")
+    self.slug = self.name.downcase.gsub(/[^a-z]+/, "-")
   end
 
 end
