@@ -1,0 +1,3 @@
+development: "postgres://graham@localhost/get-points-sinatra_development"
+test: "postgres://graham@localhost/get-points-sinatra_test"
+production: "postgres://graham@localhost/get-points-sinatra_production"
