@@ -15,10 +15,10 @@ class Click < ActiveRecord::Base
 
   POINTS_TO_MINUTES = {
     0 => 15,
-    100 => 1 * 60,
-    250 => 2 * 60,
-    500 => 3 * 60,
-    1000 => 4 * 60
+    100 => 30,
+    250 => 45,
+    500 => 60,
+    1000 => 90
   }
 
   after_initialize :set_points
