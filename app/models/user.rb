@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   end
 
   def allowed_to_click?
-    self.latest_click.next_click_allowed <= Time.now
+    !self.latest_click || self.latest_click.next_click_allowed <= Time.now
   end
 
   def next_click_allowed_words
