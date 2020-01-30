@@ -5,7 +5,7 @@
     </aside>
   <% end %>
   <h2>Hey, <%= @user.name %>. You have <%= @user.points %> points.</h2>
-  <% if @user.allowed_to_click? %>
+  <% if @user.can_click? %>
     <a href="/create-points">Click here to GET points!</a>
   <% else %>
     <h3>You can click again in <%= @user.next_click_allowed_words %>.</h3>
@@ -16,6 +16,7 @@
       <tr>
         <th>Name</th>
         <th>Points</th>
+        <th>Can click</th>
       </tr>
     </thead>
     <tbody>
@@ -23,6 +24,13 @@
         <tr>
           <td><%= user.name %></td>
           <td><%= user.points %></td>
+          <td>
+            <% if user.can_click? %>
+              now
+            <% else %>
+              in <%= user.next_click_allowed_words %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

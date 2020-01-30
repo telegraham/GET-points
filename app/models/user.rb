@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     self.clicks.order("created_at desc").first
   end
 
-  def allowed_to_click?
+  def can_click?
     !self.latest_click || self.latest_click.next_click_allowed <= Time.now
   end
 
