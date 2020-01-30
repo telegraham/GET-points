@@ -1,1 +1,16 @@
-Hey
+<% if @user %>
+  <% if flash[:points] %>
+    <aside>
+      Scored <%= flash[:points] %> points!
+    </aside>
+  <% end %>
+  <h2>Hey, <%= @user.name %>. You have <%= @user.points %> points.</h2>
+  <% if @user.allowed_to_click? %>
+    <a href="/create-points">Click here to GET points!</a>
+  <% else %>
+    <h4>You can click again in <%= @user.next_click_allowed_words %>.</h4>
+  <% end %>
+<% else %>
+  <h2>Please log in to play!</h2>
+  <p>If you don't know how to log in, slack Graham for access.</p>
+<% end %>
