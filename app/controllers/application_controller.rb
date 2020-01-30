@@ -25,7 +25,10 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    @user = User.find(session[:user_id]) if logged_in?
+    if logged_in?
+      @user = User.find(session[:user_id]) 
+      @users = User.includes(:clicks).sort_by(&:points)
+    end
     erb :welcome
   end
 
