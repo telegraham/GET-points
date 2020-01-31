@@ -49,7 +49,9 @@ class ApplicationController < Sinatra::Base
       destination_user = User.find_by(slug: params[:user_slug])
       if destination_user
         transfer = Transfer.create(from: current_user, to: destination_user, points: params[:points])
-        flash[:transfer] = { to: destination_user.name, points: transfer.points }
+        if transfer.affordable?
+          flash[:transfer] = { to: destination_user.name, points: transfer.points }
+        end
       end
     end
     redirect to "/"
