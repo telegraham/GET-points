@@ -34,11 +34,11 @@ class ApplicationController < Sinatra::Base
 
   get "/create-points" do
     if logged_in?
-      if current_user.can_click?
-        click = current_user.click!
+      click = current_user.click!
+      if click.valid?
         flash[:points] = click.value
       else
-        flash[:error] = :forbidden_click
+        flash[:error] = click.errors.full_messages
       end
     end
     redirect to "/"
@@ -48,10 +48,11 @@ class ApplicationController < Sinatra::Base
     if logged_in?
       destination_user = User.find_by(slug: params[:user_slug])
       if destination_user
-        transfer = Transfer.new(from: current_user, to: destination_user, points: params[:points])
-        if transfer.affordable?
-          transfer.save
+        transfer = Transfer.create(from: current_user, to: destination_user, points: params[:points])
+        if transfer.valid?
           flash[:transfer] = { to: destination_user.name, points: transfer.points }
+        else
+          flash[:error] = transfer.errors.full_messages
         end
       end
     end

@@ -5,6 +5,10 @@ class Click < ActiveRecord::Base
 
   include ActionView::Helpers::DateHelper
 
+  belongs_to :user
+
+  validate :user_can_click
+
   POSSIBLE_POINTS = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     100, 100, 100, 100, 100, 100, 100, 100, 
@@ -37,6 +41,12 @@ class Click < ActiveRecord::Base
 
   def created_at_in_words
     time_ago_in_words(self.created_at)
+  end
+
+  def user_can_click
+    unless user.can_click? || self.id
+      errors.add(:user, "is not allowed to click right now")
+    end
   end
 
   private

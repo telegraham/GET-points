@@ -1,4 +1,5 @@
 <% if @user %>
+  <h2>Hey, <%= @user.name %>. You have <%= @user.points_delimited %> points.</h2>
   <% if flash[:points] %>
     <aside class="notification">
       Scored <%= flash[:points] %> points!
@@ -10,15 +11,14 @@
     </aside>
   <% end %>
   <% if flash[:error] %>
-    <% if flash[:error] === :forbidden_click %>
     <aside class="error">
-      You aren't allowed to click right now.
+      <%= flash[:error].join(", ") %>
     </aside>
-    <% end %>
   <% end %>
-  <h2>Hey, <%= @user.name %>. You have <%= @user.points_delimited %> points.</h2>
   <% if @user.can_click? %>
-    <a href="/create-points">Click here to GET points!</a>
+    <a href="/create-points">
+      Click here to GET points!
+    </a>
   <% else %>
     <h3>You can click again in <%= @user.next_click_allowed_words %>.</h3>
   <% end %>
