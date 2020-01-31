@@ -28,19 +28,20 @@
       <tr>
         <th>Name</th>
         <th>Points</th>
-        <th>Last click</th>
         <th>Clicks</th>
+        <th>Last click</th>
         <th>Can click</th>
-        <th>Transfer</th>
+        <th>Transfer points</th>
+        <th>Sent xfers</th>
       </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= user.points %></td>
+          <td class="numeric"><%= user.points_delimited %></td>
+          <td class="numeric"><%= user.clicks.length %></td>
           <td><%= user.last_click_time_in_words %></td>
-          <td><%= user.clicks.length %></td>
           <td>
             <% if user.can_click? %>
               now
@@ -49,11 +50,12 @@
             <% end %>
           </td>
           <td>
-            <a href="/transfer-points/<%= user.slug %>/100">+100</a>
-            <a href="/transfer-points/<%= user.slug %>/250">+250</a>
-            <a href="/transfer-points/<%= user.slug %>/500">+500</a>
-            <a href="/transfer-points/<%= user.slug %>/1000">+1k</a>
+            <a href="/transfer-points/<%= user.slug %>/100">100</a>
+            <a href="/transfer-points/<%= user.slug %>/250">250</a>
+            <a href="/transfer-points/<%= user.slug %>/500">500</a>
+            <a href="/transfer-points/<%= user.slug %>/1000">1k</a>
           </td>
+          <td class="numeric"><%= user.transfers_from.count %></td>
         </tr>
       <% end %>
     </tbody>

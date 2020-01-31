@@ -13,14 +13,22 @@
   margin: 1em 0;
 }
 
-table{
+table {
   width: 100%;
+  border-spacing: 0;
 }
 th {
   text-align: left; 
 }
 tr:nth-child(even) {
   background: #eee;
+}
+
+td, th {
+  padding: .5em;
+}
+td.numeric {
+  text-align: right;
 }
 
 @media screen {

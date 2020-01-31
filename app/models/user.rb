@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+  include ActionView::Helpers::NumberHelper
+
+
   before_validation :slugify_name
   after_initialize :create_login_token
 
@@ -10,6 +13,10 @@ class User < ActiveRecord::Base
 
   def points
     clicks.sum(:value) + transfers_to.sum(:points) - transfers_from.sum(:points)
+  end
+
+  def points_delimited
+    number_with_delimiter(points)
   end
 
   def latest_click
