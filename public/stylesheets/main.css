@@ -27,7 +27,8 @@ tr:nth-child(even) {
 td, th {
   padding: .5em;
 }
-td.numeric {
+td.numeric,
+th.numeric {
   text-align: right;
 }
 
