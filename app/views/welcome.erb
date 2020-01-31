@@ -4,6 +4,18 @@
       Scored <%= flash[:points] %> points!
     </aside>
   <% end %>
+  <% if flash[:transfer] %>
+    <aside class="notification">
+      Transferred <%= flash[:transfer][:points] %> points to <%= flash[:transfer][:to] %>.
+    </aside>
+  <% end %>
+  <% if flash[:error] %>
+    <% if flash[:error] === :forbidden_click %>
+    <aside class="error">
+      You aren't allowed to click right now.
+    </aside>
+    <% end %>
+  <% end %>
   <h2>Hey, <%= @user.name %>. You have <%= @user.points %> points.</h2>
   <% if @user.can_click? %>
     <a href="/create-points">Click here to GET points!</a>
@@ -19,6 +31,7 @@
         <th>Last click</th>
         <th>Clicks</th>
         <th>Can click</th>
+        <th>Transfer</th>
       </tr>
     </thead>
     <tbody>
@@ -34,6 +47,12 @@
             <% else %>
               in <%= user.next_click_allowed_words %>
             <% end %>
+          </td>
+          <td>
+            <a href="/transfer-points/<%= user.slug %>/100">+100</a>
+            <a href="/transfer-points/<%= user.slug %>/250">+250</a>
+            <a href="/transfer-points/<%= user.slug %>/500">+500</a>
+            <a href="/transfer-points/<%= user.slug %>/1000">+1k</a>
           </td>
         </tr>
       <% end %>

@@ -1,8 +1,15 @@
 .notification {
   background: #8de29c;
-  border: 1px solid hsla(131, 100%, 30%, 1);
+  border: 1px solid #00991c;
   padding: 1em;
-  color: hsla(131, 100%, 20%, 1);
+  color: #006613;
+  margin: 1em 0;
+}
+.error {
+  background: #e29c8d;
+  border: 1px solid #991c00;
+  padding: 1em;
+  color: #661300;
   margin: 1em 0;
 }
 

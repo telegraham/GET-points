@@ -27,15 +27,30 @@ class ApplicationController < Sinatra::Base
   get "/" do
     if logged_in?
       @user = User.find(session[:user_id]) 
-      @users = User.includes(:clicks).sort_by(&:points).reverse
+      @users = User.includes(:clicks, :transfers_to, :transfers_from).sort_by(&:points).reverse
     end
     erb :welcome
   end
 
   get "/create-points" do
     if logged_in?
-      click = current_user.click!
-      flash[:points] = click.value
+      if current_user.can_click?
+        click = current_user.click!
+        flash[:points] = click.value
+      else
+        flash[:error] = :forbidden_click
+      end
+    end
+    redirect to "/"
+  end
+
+  get "/transfer-points/:user_slug/:points" do
+    if logged_in?
+      destination_user = User.find_by(slug: params[:user_slug])
+      if destination_user
+        transfer = Transfer.create(from: current_user, to: destination_user, points: params[:points])
+        flash[:transfer] = { to: destination_user.name, points: transfer.points }
+      end
     end
     redirect to "/"
   end

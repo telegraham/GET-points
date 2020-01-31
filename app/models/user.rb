@@ -5,8 +5,11 @@ class User < ActiveRecord::Base
 
   has_many :clicks
 
+  has_many :transfers_to, class_name: "Transfer", foreign_key: :to_id
+  has_many :transfers_from, class_name: "Transfer", foreign_key: :from_id
+
   def points
-    clicks.sum(:value)
+    clicks.sum(:value) + transfers_to.sum(:points) - transfers_from.sum(:points)
   end
 
   def latest_click
