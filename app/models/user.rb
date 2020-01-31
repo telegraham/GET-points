@@ -2,7 +2,6 @@ class User < ActiveRecord::Base
 
   include ActionView::Helpers::NumberHelper
 
-
   before_validation :slugify_name
   after_initialize :create_login_token
 

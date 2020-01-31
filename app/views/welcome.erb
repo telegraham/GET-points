@@ -16,7 +16,7 @@
     </aside>
     <% end %>
   <% end %>
-  <h2>Hey, <%= @user.name %>. You have <%= @user.points %> points.</h2>
+  <h2>Hey, <%= @user.name %>. You have <%= @user.points_delimited %> points.</h2>
   <% if @user.can_click? %>
     <a href="/create-points">Click here to GET points!</a>
   <% else %>
