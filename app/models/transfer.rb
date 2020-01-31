@@ -4,7 +4,7 @@ class Transfer < ActiveRecord::Base
   belongs_to :to, class_name: "User"
 
   def affordable?
-    to.points + points > 0
+    to.points + points > [to.points, 0].min
   end
 
 end
