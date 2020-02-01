@@ -1,4 +1,6 @@
 require './config/environment'
+require_relative '../modules/points_to_string'
+require_relative '../modules/time_to_string'
 
 class ApplicationController < Sinatra::Base
 
@@ -9,6 +11,9 @@ class ApplicationController < Sinatra::Base
     enable :sessions, :logging
     register Sinatra::Flash
   end
+
+  helpers PointsToString
+  helpers TimeToString
 
   def current_user_id
     session[:user_id]

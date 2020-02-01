@@ -1,5 +1,5 @@
 <% if @user %>
-  <h2>Hey, <%= @user.name %>. You have <%= @user.points_delimited %> points.</h2>
+  <h2>Hey, <%= @user.name %>. You have <%= points_in_words(@user.points) %> points.</h2>
   <% if flash[:points] %>
     <aside class="notification">
       Scored <%= flash[:points] %> points!
@@ -20,7 +20,7 @@
       Click here to GET points!
     </a>
   <% else %>
-    <h3>You can click again in <%= @user.next_click_allowed_words %>.</h3>
+    <h3>You can click again <%= click_time_future_in_words @user.latest_click %>.</h3>
   <% end %>
   <h2>Leaderboard</h2>
   <table>
@@ -39,15 +39,11 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td class="numeric"><%= user.points_delimited %></td>
+          <td class="numeric"><%= points_in_words user.points %></td>
           <td class="numeric"><%= user.clicks.length %></td>
-          <td><%= user.last_click_time_in_words %></td>
+          <td><%= click_time_ago_in_words user.latest_click %></td>
           <td>
-            <% if user.can_click? %>
-              now
-            <% else %>
-              in <%= user.next_click_allowed_words %>
-            <% end %>
+            <%= click_time_future_in_words user.latest_click %>
           </td>
           <td>
             <a href="/transfer-points/<%= user.slug %>/100">100</a>
