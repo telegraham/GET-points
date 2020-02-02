@@ -19,15 +19,15 @@ module TimeToString
     elsif time > Time.current
       time_ago_in_words(time) + " from now"
     elsif time.day == Time.current.day
-      time.localtime.strftime("Today at %l:%M:%S %p")
+      time.localtime.strftime("Today at %l:%M:%S %p %Z")
     elsif time.day == Time.current.day - 1
-      time.localtime.strftime("Yesterday at %l:%M:%S %p")
+      time.localtime.strftime("Yesterday at %l:%M:%S %p %Z")
     elsif time > 1.week.ago
-      time.localtime.strftime("%A at %l:%M:%S %p")
+      time.localtime.strftime("%A at %l:%M:%S %p %Z")
     elsif time.year == Time.current.year
-      time.localtime.strftime("%A, %B %e at %l:%M:%S %p")
+      time.localtime.strftime("%A, %B %e at %l:%M:%S %p %Z")
     else
-      time.localtime.strftime("%A, %B %e, %Y at %l:%M:%S %p")
+      time.localtime.strftime("%A, %B %e, %Y at %l:%M:%S %p %Z")
     end
   end
 
