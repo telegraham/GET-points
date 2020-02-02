@@ -1,0 +1,56 @@
+<table>
+  <thead>
+    <tr>
+      <% if transfers.first.id %>
+      <th>ID</th>
+      <th>When</th>
+      <% else %>
+      <th>Total</th>
+      <% end %>
+      <th>From</th>
+      <th>To</th>
+      <th class="numeric">Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% transfers.each do |transfer| %>
+      <tr>
+        <% if transfer.id %>
+        <td><%= transfer.id %>-X</td>
+        <td><%= precise_time transfer.created_at %></td>
+        <% else %>
+        <td>Total</td>
+        <% end %>
+        <td><%= relative_user_name transfer.from, logged_in_user %></td>
+        <td><%= relative_user_name transfer.to, logged_in_user %></td>
+        <td class="numeric">
+          <% if defined? primary_user %>
+          <a href="<%= relative_transfers_between(transfer.from, transfer.to, primary_user) %>">
+            <%= points_in_words transfer.points %>
+          </a>
+          <% else %>
+            <%= points_in_words transfer.points %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <% if defined? user %>
+      <tr>
+        <td>Total points sent</td>
+        <td><%= user.name %></td>
+        <td>&nbsp;</td>
+        <td class="numeric"><%= points_in_words user.transfers_sent_total %></td>
+      </tr>
+        <tr>
+        <td>Total points received</td>
+        <td>&nbsp;</td>
+        <td><%= user.name %></td>
+        <td class="numeric"><%= points_in_words user.transfers_received_total %></td>
+      </tr>
+      <tr>
+        <td colspan="3">Total transfers</th>
+        <td class="numeric"><%= points_in_words user.transfers_total %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

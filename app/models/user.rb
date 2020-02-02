@@ -8,8 +8,7 @@ class User < ActiveRecord::Base
   # has_many :transfers_from, class_name: "Transfer", foreign_key: :from_id
 
   def transfers
-    Transfer.where("from_id = ? OR to_id = ?", self.id, self.id)
-    .order("coalesce(created_at, to_timestamp(0)) desc, id desc")
+    Transfer.includes_users.involving(self.id)
   end
 
   def transfers_total
@@ -20,7 +19,7 @@ class User < ActiveRecord::Base
     transfers_from_total || 0
   end
 
-    def transfers_received_total
+  def transfers_received_total
     transfers_to_total || 0
   end
 
@@ -40,7 +39,7 @@ class User < ActiveRecord::Base
     clicks.create
   end
 
-  default_scope -> {
+  scope :with_points, -> {
     joins( 'left join (select to_id, sum(points) as to_points from transfers group by to_id) as transfers_to on transfers_to.to_id = users.id
             left join (select from_id, sum(points) as from_points from transfers group by from_id) as transfers_from on transfers_from.from_id = users.id
             left join (select user_id, sum(value) as click_points from clicks group by user_id) as clicks on clicks.user_id = users.id')

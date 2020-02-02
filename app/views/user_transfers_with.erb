@@ -1,0 +1,9 @@
+<h2>Transfers between 
+  <a href="/<%= @primary_user.slug %>"><%= relative_user_name @primary_user, logged_in_user %></a>
+  and 
+  <%= relative_user_name @secondary_user, logged_in_user %>
+</h2>
+
+<%= erb :transfers_table, locals: { 
+  transfers: @transfers
+} %>
