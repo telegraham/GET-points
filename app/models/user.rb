@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   has_many :clicks, -> { order("created_at desc") }
 
+  has_many :transfers_from, class_name: "Transfer", foreign_key: :from_id
+
   def latest_click
     clicks.first
   end
