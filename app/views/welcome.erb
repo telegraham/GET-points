@@ -2,12 +2,12 @@
   <h2>Hey, <%= @user.name %>. You have <%= points_in_words(@user.points) %> points.</h2>
   <% if flash[:points] %>
     <aside class="notification">
-      Scored <%= flash[:points] %> points!
+      Scored <%= points_in_words flash[:points] %> points!
     </aside>
   <% end %>
   <% if flash[:transfer] %>
     <aside class="notification">
-      Transferred <%= flash[:transfer][:points] %> points to <%= flash[:transfer][:to] %>.
+      Transferred <%= points_in_words flash[:transfer][:points] %> points to <%= flash[:transfer][:to] %>.
     </aside>
   <% end %>
   <% if flash[:error] %>
