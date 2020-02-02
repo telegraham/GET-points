@@ -1,5 +1,7 @@
 <% if @user %>
-  <h2>Hey, <%= @user.name %>. You have <%= points_in_words(@user.points) %> points.</h2>
+  <h2>Hey, <%= @user.name %>. You have 
+    <a href="/<%= @user.slug %>"><%= points_in_words(@user.points) %> points</a>.
+  </h2>
   <% if flash[:points] %>
     <aside class="notification">
       Scored <%= points_in_words flash[:points] %> points!
@@ -32,7 +34,6 @@
         <th>Last click</th>
         <th>Can click</th>
         <th>Transfer points</th>
-        <th class="numeric">Sent xfers</th>
       </tr>
     </thead>
     <tbody>
@@ -46,12 +47,11 @@
             <%= click_time_future_in_words user.latest_click %>
           </td>
           <td>
-            <a href="/transfer-points/<%= user.slug %>/100">100</a>
-            <a href="/transfer-points/<%= user.slug %>/250">250</a>
-            <a href="/transfer-points/<%= user.slug %>/500">500</a>
-            <a href="/transfer-points/<%= user.slug %>/1000">1k</a>
+            <form method="GET" action="/transfer-points/<%= user.slug %>">
+              <input type="number" name="points" />
+              <input type="submit" value="go" />
+            </form>
           </td>
-          <td class="numeric"><%= user.transfers_from.count %></td>
         </tr>
       <% end %>
     </tbody>

@@ -1,0 +1,74 @@
+<h2><%= @user.name %> (<%= points_in_words(@user.points) %> points)</h2>
+
+<h3>Transfers</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>When</th>
+      <th>From</th>
+      <th>To</th>
+      <th class="numeric">Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.transfers.each do |transfer| %>
+      <tr>
+        <td><%= transfer.id %>-X</td>
+        <td><%= precise_time transfer.created_at %></td>
+        <td><%= relative_user_name transfer.from, current_user %></td>
+        <td><%= relative_user_name transfer.to, current_user %></td>
+        <td class="numeric"><%= points_in_words transfer.points %></td>
+      </tr>
+    <% end %>
+      <tr>
+        <td>&nbsp;</td>
+        <td>Total points sent</td>
+        <td>you</td>
+        <td>&nbsp;</td>
+        <td class="numeric"><%= points_in_words @user.transfers_sent_total %></td>
+      </tr>
+        <tr>
+        <td>&nbsp;</td>
+        <td>Total points received</td>
+        <td>&nbsp;</td>
+        <td>you</td>
+        <td class="numeric"><%= points_in_words @user.transfers_received_total %></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="3">Total transfers</th>
+        <td class="numeric"><%= points_in_words @user.transfers_total %></td>
+      </tr>
+  </tbody>
+</table>
+
+<h3>Clicks</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>When</th>
+      <th>Timeout</th>
+      <th>Timeout until</th>
+      <th class="numeric">Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.clicks.each do |click| %>
+      <tr>
+        <td><%= click.id %>-C</td>
+        <td><%= precise_time click.created_at %></td>
+        <td><%= distance_of_time_in_words click.timeout %></td>
+        <td><%= precise_time click.next_click_allowed %></td>
+        <td class="numeric"><%= points_in_words click.value %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>&nbsp;</td>
+      <td>Total</th>
+      <td colspan="2"><%= distance_of_time_in_words @user.click_timeouts_total %></td>
+      <td class="numeric"><%= points_in_words @user.click_points_total %></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,6 +1,7 @@
 require './config/environment'
-require_relative '../modules/points_to_string'
-require_relative '../modules/time_to_string'
+require_relative '../helpers/points_to_string'
+require_relative '../helpers/time_to_string'
+require_relative '../helpers/user_helper'
 
 class ApplicationController < Sinatra::Base
 
@@ -14,6 +15,8 @@ class ApplicationController < Sinatra::Base
 
   helpers PointsToString
   helpers TimeToString
+  helpers ActionView::Helpers::DateHelper
+  helpers UserHelper
 
   def current_user_id
     session[:user_id]
@@ -49,7 +52,9 @@ class ApplicationController < Sinatra::Base
     redirect to "/"
   end
 
-  get "/transfer-points/:user_slug/:points" do
+
+
+  get "/transfer-points/:user_slug" do
     if logged_in?
       destination_user = User.find_by(slug: params[:user_slug])
       if destination_user
@@ -69,5 +74,11 @@ class ApplicationController < Sinatra::Base
     session[:user_id] = user.id if user
     redirect to "/"
   end
+
+  get "/:user_slug" do
+    @user = User.find_by(slug: params[:user_slug])
+    erb :user
+  end
+
 
 end
