@@ -56,7 +56,7 @@ class ApplicationController < Sinatra::Base
 
   get "/transfer-points/:user_slug" do
     if logged_in?
-      destination_user = User.find_by(slug: params[:user_slug])
+      destination_user = User.with_points.find_by(slug: params[:user_slug]) # with_points so that we can validate xfer
       if destination_user
         transfer = Transfer.create(from: logged_in_user, to: destination_user, points: params[:points])
         if transfer.valid?

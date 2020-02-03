@@ -1,15 +1,14 @@
 module UserHelper
 
-  def relative_user_name them, us
-    if them === us
-      "you"
-    else
-      them.name
-    end
+  def relative_user_name(them, logged_in_user)
+    (them == logged_in_user) ? "you" : them.name
   end
 
-  def relative_transfers_between(from, to, current_user)
-    "/#{ current_user.slug }/transfers_with/#{ from === current_user ? to.slug : from.slug }"
+  private
+
+  def transfers_with(primary, secondary, other_secondary = secondary)
+    secondary = primary == secondary ? other_secondary : secondary
+    "/#{ primary.slug }/transfers_with/#{ secondary.slug }"
   end
 
 end

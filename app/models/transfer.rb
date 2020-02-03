@@ -26,7 +26,7 @@ class Transfer < ActiveRecord::Base
   scope :point_totals_by_user, -> {
     select("to_id, from_id, sum(points) as points, min(created_at) as created_at_min, max(created_at) as created_at_max")
     .group(:to_id, :from_id)
-    .order("to_id + from_id asc, greatest(to_id, from_id), least(to_id, from_id)")
+    .order("abs(sum(points)) desc")
   }
 
   scope :chronologically_desc, -> {
