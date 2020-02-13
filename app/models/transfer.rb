@@ -3,15 +3,12 @@ class Transfer < ActiveRecord::Base
   belongs_to :from, class_name: "User"
   belongs_to :to, class_name: "User"
 
-  validate :must_be_affordable
- 
-  def must_be_affordable
-    return if self.id
-    destination_points = to.points
-    future_to_balance = destination_points + points
-    if future_to_balance < 0 && future_to_balance < destination_points
-      errors.add(:points, "must not be a quantity that would make the destination account negative (or more negative)")
-    end
+  validate :must_be_positive
+
+  def must_be_positive
+    if points < 0
+      errors.add(:points, "must be a positive number")
+    end 
   end
 
   scope :includes_users, -> { includes(:to, :from) }
